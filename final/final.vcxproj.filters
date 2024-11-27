@@ -18,12 +18,18 @@
     <ClInclude Include="stockman.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="stock.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stockman.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="stock.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
