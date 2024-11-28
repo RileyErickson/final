@@ -10,9 +10,12 @@ private:
     double balance;
     stockman& sm;
     vector<tuple<string, int>> owned_stocks;
+    string name;
 public:
-    account(stockman& stockManager);
+    
+    account(stockman& stockManager, string n);
     double getBalance() ;
+    string getName();
     int getStockAmount(string name);
     void setBalance(double newBalance);
     int purchaseStock(string stockName, int quantity);

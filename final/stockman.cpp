@@ -11,6 +11,9 @@ stockman::stockman() {
     stocks.push_back(stock("pat", 524.32));
     stocks.push_back(stock("sat", 145.23));
     stocks.push_back(stock("vat", 334.29));
+    stocks.push_back(stock("wat", 334.29));
+    stocks.push_back(stock("zat", 334.29));
+
 }
 
 int stockman::getStock(string name) {

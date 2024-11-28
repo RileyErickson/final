@@ -18,10 +18,13 @@ private:
 	void menu();
 	void transaction();
 	void passTime();
+	void swapAccount();
 	stockman& sm;
-	account& a;
+	account* a;
+	account* b;
+	vector<account*> accounts;
 public:
-	viewMan(account& a, stockman& sm);
+	viewMan(account* a, stockman& sm);
 	void userInterface();
 
 

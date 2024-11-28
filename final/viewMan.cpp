@@ -2,8 +2,10 @@
 
 
 
-viewMan::viewMan(account& a, stockman& sm) : a(a), sm(sm) {	
-}
+	viewMan::viewMan(account* a, stockman& sm) : sm(sm) {	
+		//which ever account we are starting with
+		accounts.push_back(a);
+	}
 //end of each piece it re enters the main directory by calling userInterface
 void viewMan::prices() {
 	int counter = 0;
@@ -15,7 +17,7 @@ void viewMan::prices() {
 		}
 		else {
 			cout << endl;
-			cout << "-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_" << endl;
+			cout << "-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-" << endl;
 			counter = 0;
 		}
 	}
@@ -23,15 +25,28 @@ void viewMan::prices() {
 }
 
 void viewMan::owned() {
-
+	int counter = 0;
+	for (stock& s : sm.getStocks()) {
+		counter++;
+		cout << s.getName() << ": " << a->getStockAmount(s.getName());
+		if (counter != 3) {
+			cout << " | ";
+		}
+		else {
+			cout << endl;
+			cout << "-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-" << endl;
+			counter = 0;
+		}
+	}
 	userInterface();
 }
 
 void viewMan::balence() {
-
+	
+	cout << " Balence" << a->getBalance() << endl;
 	userInterface();
 }
-
+//exits program since it does not call userInterface to return to main menu
 void viewMan::exit() {
 	cout << "Have a Great Day!=)" << endl;
 }
@@ -81,6 +96,9 @@ void viewMan::userInterface() {
 	case 5:
 		passTime();
 		break;
+	case 6:
+		swapAccount();
+		break;
 	case 0:
 		exit();
 		break;
@@ -91,4 +109,19 @@ void viewMan::userInterface() {
 
 	cout << "test worked" << endl;
 
+}
+void viewMan::swapAccount() {
+	string aName;
+	
+	cout << "give the name of the account to log in as, or the name of a new account to make" << endl;
+	for (account* a : accounts) {
+		cout << a->getName() << endl;
+	}
+	cin >> aName;
+	bool found = false;
+	for (account* acc : accounts) {
+		if (acc->getName() == aName) {
+			a = acc;
+		}
+	}
 }

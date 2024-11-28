@@ -7,9 +7,9 @@ int main() {
 	//test code no real usage
 	std::cout << "test" << std::endl;
 	stockman sm = stockman();
-	account user(sm);
+	account user(sm, "nitro");
 	bool run = true;
-	viewMan x(user, sm);
+	viewMan x(&user, sm);
 	x.userInterface();
 	return 0;
 }
