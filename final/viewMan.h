@@ -16,6 +16,8 @@ private:
 	void balence();
 	void exit();
 	void menu();
+	void transaction();
+	void passTime();
 	stockman& sm;
 	account& a;
 public:
