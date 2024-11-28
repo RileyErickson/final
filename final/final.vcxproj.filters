@@ -24,6 +24,9 @@
     <ClInclude Include="account.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="viewMan.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stockman.cpp">
@@ -36,6 +39,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="account.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="viewMan.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

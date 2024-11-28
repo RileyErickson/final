@@ -130,12 +130,14 @@
     <ClInclude Include="account.h" />
     <ClInclude Include="stock.h" />
     <ClInclude Include="stockman.h" />
+    <ClInclude Include="viewMan.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="account.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="stock.cpp" />
     <ClCompile Include="stockman.cpp" />
+    <ClCompile Include="viewMan.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

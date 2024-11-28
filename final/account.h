@@ -8,7 +8,7 @@ class account
 {
 private:
     double balance;
-    stockman sm;
+    stockman& sm;
     vector<tuple<string, int>> owned_stocks;
 public:
     account(stockman& stockManager);

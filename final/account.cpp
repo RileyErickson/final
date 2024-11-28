@@ -1,6 +1,5 @@
 #include "account.h"
-account::account(stockman& stockManager) {
-    sm = stockManager;
+account::account(stockman& stockManager) : sm(stockManager) {
     for (stock s : stockManager.getStocks()) {
         owned_stocks.emplace_back(s.getName(), 0);
     }
