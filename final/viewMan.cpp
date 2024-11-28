@@ -4,6 +4,7 @@
 
 	viewMan::viewMan(account* a, stockman& sm) : sm(sm) {	
 		//which ever account we are starting with
+		this->a = a;
 		accounts.push_back(a);
 	}
 //end of each piece it re enters the main directory by calling userInterface
@@ -56,11 +57,13 @@ void viewMan::passTime() {
 	userInterface();
 }
 void viewMan::menu() {
+	cout << "hello " << a->getName() << endl;
 	cout << "1. make a transaction (buy/sell)" << endl;
 	cout << "2. check your balence " << endl;
 	cout << "3. check stock prices" << endl;
 	cout << "4. view owned stocks" << endl;
-	cout << "5. view owned stocks" << endl;
+	cout << "5. pass time " << endl;
+	cout << "6. change user " << endl;
 	cout << "0. exit" << endl;
 }
 void viewMan::transaction() {
@@ -122,6 +125,10 @@ void viewMan::swapAccount() {
 	for (account* acc : accounts) {
 		if (acc->getName() == aName) {
 			a = acc;
+			found = true;
 		}
 	}
+	a = new account(sm, aName);
+	accounts.push_back(a);
+	userInterface();
 }
