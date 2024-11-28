@@ -6,7 +6,19 @@ viewMan::viewMan(account& a, stockman& sm) : a(a), sm(sm) {
 }
 //end of each piece it re enters the main directory by calling userInterface
 void viewMan::prices() {
-
+	int counter = 0;
+	for (stock& s : sm.getStocks()) {
+		counter++;
+		cout << s.getName() << ": " << s.getPrice();
+		if (counter != 3) {
+			cout << " | ";
+		}
+		else {
+			cout << endl;
+			cout << "-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_" << endl;
+			counter = 0;
+		}
+	}
 	userInterface();
 }
 
@@ -24,7 +36,8 @@ void viewMan::exit() {
 	cout << "Have a Great Day!=)" << endl;
 }
 void viewMan::passTime() {
-
+	sm.updateAllStocks();
+	cout << "Check those New Prices!" << endl;
 	userInterface();
 }
 void viewMan::menu() {
@@ -71,7 +84,9 @@ void viewMan::userInterface() {
 	case 0:
 		exit();
 		break;
-
+	default:
+		userInterface();
+		break;
 	}
 
 	cout << "test worked" << endl;
