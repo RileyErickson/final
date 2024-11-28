@@ -9,16 +9,16 @@ std::string stock::getName() {
     return name;
 }
 
-void stock::setName(string newName) {
-    name = newName;
+void stock::setName(string name) {
+    this->name = name;
 }
 
 double stock::getPrice() {
     return price;
 }
 
-void stock::setPrice(double newPrice) {
-    price = newPrice;
+void stock::setPrice(double price) {
+    this->price = price;
 }
 
 void stock::updateStock() {

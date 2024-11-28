@@ -1,6 +1,6 @@
 #include "stockman.h"
 
-stockman::stockman(string account) {
+stockman::stockman() {
     stocks.push_back(stock("tat", 120.22));
     stocks.push_back(stock("nat", 133.53));
     stocks.push_back(stock("cat", 49.26));
@@ -11,14 +11,6 @@ stockman::stockman(string account) {
     stocks.push_back(stock("pat", 524.32));
     stocks.push_back(stock("sat", 145.23));
     stocks.push_back(stock("vat", 334.29));
-}
-
-string stockman::getAccount() {
-    return account;
-}
-
-int stockman::getBalance() {
-    return 1234;
 }
 
 int stockman::getStock(string name) {

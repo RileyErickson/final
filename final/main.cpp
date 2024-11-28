@@ -1,20 +1,18 @@
 #include <iostream>
 #include "stockman.h"
 #include "stock.h"
+#include "account.h"
 int main() {
 	//test code no real usage
 	std::cout << "test2" << std::endl;
-	stockman sm("nitro");
+	stockman sm = stockman();
 	stock  x("nitro", 4000.0);
-	cout << "Account Name: " << sm.getAccount() << " " << x.getName() << " " << x.getPrice() << endl;
-
-	
+	account a(sm);
 	sm.updateAllStocks();
-	for (stock s : sm.getStocks()) {
-		std::cout << "Stock Name: " << s.getName()
-			<< ", Price: " << s.getPrice()
-			<< std::endl;
+	string name;
+	while (true){
+		cin >> name;
+		std::cout << a.getStockAmount(name) << std::endl;
 	}
-
 	return 0;
 }

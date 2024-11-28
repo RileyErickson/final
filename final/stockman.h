@@ -7,9 +7,7 @@
 using namespace std;
 class stockman {
 public:
-	stockman(string  accountname);
-	string getAccount();
-	int getBalance();
+	stockman();
 	int getStock(string name);
 	vector<stock>& getStocks();
 	void updateAllStocks();

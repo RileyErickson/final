@@ -11,10 +11,10 @@ public:
     stock(string n, double p);
 
     string getName();
-    void setName(string newName);
+    void setName(string name);
 
     double getPrice();
-    void setPrice(double newPrice);
+    void setPrice(double price);
 
     void updateStock();
 };
