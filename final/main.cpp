@@ -5,7 +5,7 @@
 #include "viewMan.h"
 int main() {
 	//test code no real usage
-	std::cout << "test211" << std::endl;
+	std::cout << "test2121" << std::endl;
 	stockman sm = stockman();
 	account user(sm);
 	bool run = true;
