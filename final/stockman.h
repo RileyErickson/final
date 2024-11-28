@@ -14,9 +14,6 @@ public:
 	vector<stock>& getStocks();
 	void updateAllStocks();
 private:
-	string account;
 	vector<stock> stocks;
-	double balence;
-
 };
 #endif

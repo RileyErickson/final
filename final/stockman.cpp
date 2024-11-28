@@ -1,8 +1,6 @@
 #include "stockman.h"
 
 stockman::stockman(string account) {
-    this->account = account;
-    balence = 5000.0;
     stocks.push_back(stock("tat", 120.22));
     stocks.push_back(stock("nat", 133.53));
     stocks.push_back(stock("cat", 49.26));
