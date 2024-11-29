@@ -20,8 +20,8 @@ private:
 	void passTime();
 	void swapAccount();
 	void depositWithdraw();
-	stockman& sm;
-	account* a;
+	stockman& stockManager;
+	account* activeUser;
 	account* b;
 	vector<account*> accounts;
 public:

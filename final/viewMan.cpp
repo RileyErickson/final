@@ -1,17 +1,18 @@
 #include "viewMan.h"
 
+//a = active user
+//stockManager = stock manager
 
-
-	viewMan::viewMan(account* a, stockman& sm) : sm(sm) {	
+	viewMan::viewMan(account* a, stockman& sm) : stockManager(sm) {	
 		//which ever account we are starting with
-		this->a = a;
-		accounts.push_back(a);
+		activeUser = a;
+		accounts.push_back(activeUser);
 	}
-//prices/owned calls nothing at the end so other methods can use them for display purposes without them
-//automaticly going to a new menu
+//prices/owned calls nothing at to allow them to be used inside of menus
+//when seeing owned stocks/ stock prices would be helpful
 void viewMan::prices() {
 	int counter = 0;
-	for (stock& s : sm.getStocks()) {
+	for (stock& s : stockManager.getStocks()) {
 		counter++;
 		cout << s.getName() << ": " << s.getPrice();
 		if (counter != 3) {
@@ -25,12 +26,11 @@ void viewMan::prices() {
 	}
 	//userInterface();
 }
-
 void viewMan::owned() {
 	int counter = 0;
-	for (stock& s : sm.getStocks()) {
+	for (stock& s : stockManager.getStocks()) {
 		counter++;
-		cout << s.getName() << ": " << a->getStockAmount(s.getName()) <<" $: " << sm.getStock(s.getName()).getPrice() * a->getStockAmount(s.getName());
+		cout << s.getName() << ": " << activeUser->getStockAmount(s.getName()) <<" $: " << stockManager.getStock(s.getName()).getPrice() * activeUser->getStockAmount(s.getName());
 		if (counter != 3) {
 			cout << " | ";
 		}
@@ -42,27 +42,31 @@ void viewMan::owned() {
 	}
 	//userInterface();
 }
-
+//shows users their balence and profits. 
+// auto returns to the main menu after showing
 void viewMan::balence() {
 	
-	cout << " Balence: " << a->getBalance() << endl;
+	cout << " Balence: " << activeUser->getBalance() << endl;
 	//shows how much money has been made by an account
-	cout << " Profits: " << (a->getRen() - a->getSpent()) << endl;
+	cout << " Profits: " << (activeUser->getRen() - activeUser->getSpent()) << endl;
 	userInterface();
 }
 //exits program since it does not call userInterface to return to main menu
+//simply allows the intial userInterface from the main.cpp to end exiting the program
 void viewMan::exit() {
 	cout << "Have a Great Day!=)" << endl;
 }
+//changes all the stock prices 
+//
 void viewMan::passTime() {
-	sm.updateAllStocks();
+	stockManager.updateAllStocks();
 	cout << "Check out those New Prices!" << endl;
 	prices();
 	userInterface();
 }
 void viewMan::menu() {
 
-	cout << a->getName() <<"'s account" << endl;
+	cout << activeUser->getName() <<"'s account" << endl;
 	cout << "make a selection (type 0-5 to a make choice)" << endl;
 	cout << "1. make a transaction (buy/sell)" << endl;
 	cout << "2. check your balence " << endl;
@@ -87,7 +91,7 @@ void viewMan::transaction() {
 		cin.clear();
 		cin >> input;
 		//checks stock selection
-		for (stock& s : sm.getStocks()) {
+		for (stock& s : stockManager.getStocks()) {
 			if (s.getName() == input) {
 				validStock = true;
 				price = s.getPrice();
@@ -109,13 +113,13 @@ void viewMan::transaction() {
 			cout << "thats not right, try again" << endl;
 			cin >> amount;
 		}
-		if (!(price * amount <= a->getBalance())) {
+		if (!(price * amount <= activeUser->getBalance())) {
 			cout << "am sorry you can't afford that much" << endl;
 			transaction();
 		}
-		a->purchaseStock(input, amount);
-		a->setBalance(a->getBalance() - amount*price);
-		a->addSpent(amount*price);
+		activeUser->purchaseStock(input, amount);
+		activeUser->setBalance(activeUser->getBalance() - amount*price);
+		activeUser->addSpent(amount*price);
 		cout << "Congrats you now own " << amount << " of " << input << endl;
 
 	}
@@ -128,7 +132,7 @@ void viewMan::transaction() {
 		cin.clear();
 		cin >> input;
 		//checks stock selection
-		for (stock& s : sm.getStocks()) {
+		for (stock& s : stockManager.getStocks()) {
 			if (s.getName() == input) {
 				validStock = true;
 				price = s.getPrice();
@@ -151,13 +155,13 @@ void viewMan::transaction() {
 			cin >> amount;
 		}
 		//stops selling more then you have
-		if ((amount > a->getStockAmount(input))) {
+		if ((amount > activeUser->getStockAmount(input))) {
 			cout << "am sorry you can't sell more then you have" << endl;
 			transaction();
 		}
-		a->sellStock(input, amount);
-		a->addRen(amount*price);
-		a->setBalance(a->getBalance() + amount * price);
+		activeUser->sellStock(input, amount);
+		activeUser->addRen(amount*price);
+		activeUser->setBalance(activeUser->getBalance() + amount * price);
 		cout << "Congrats you sold " << amount << " of " << input << " for "<< amount*price << endl;
 	} else if ((input == "e") || (input == "E")) {
 		userInterface();
@@ -182,8 +186,8 @@ void viewMan::depositWithdraw() {
 		}
 		//prevents 23.3242343225 inputs
 		amount = static_cast<int>(amount * 100) / 100.0;
-		a->setBalance(a->getBalance() + amount);
-		a->addDeposited(amount);
+		activeUser->setBalance(activeUser->getBalance() + amount);
+		activeUser->addDeposited(amount);
 		userInterface();
 	}
 	if ((input == "w") || (input == "W")) {
@@ -199,15 +203,15 @@ void viewMan::depositWithdraw() {
 				cin >> amount;
 			}
 			//checks if its less then or equal to balance before allowing withdraw
-			if (amount <= a->getBalance()) {
+			if (amount <= activeUser->getBalance()) {
 				validAmount = true;
 			}
 			else {
-				cout << "thats more then your balence of " << a->getBalance() << endl;
+				cout << "thats more then your balence of " << activeUser->getBalance() << endl;
 			}
 		}
-		a->setBalance(a->getBalance() - amount);
-		a->addWithdraw(amount);
+		activeUser->setBalance(activeUser->getBalance() - amount);
+		activeUser->addWithdraw(amount);
 		
 	}
 	if ((input == "e") || (input == "E")) {
@@ -230,6 +234,9 @@ void viewMan::userInterface() {
 	}
 	//handles breaking out into each specific piece 
  	switch (choice) {
+	case 0:
+		exit();
+		break;
 	case 1 :
 		transaction();
 		break;
@@ -252,9 +259,6 @@ void viewMan::userInterface() {
 		break;
 	case 7:
 		depositWithdraw();
-	case 0:
-		exit();
-		break;
 	default:
 		userInterface();
 		break;
@@ -273,13 +277,13 @@ void viewMan::swapAccount() {
 	bool found = false;
 	for (account* acc : accounts) {
 		if (acc->getName() == aName) {
-			a = acc;
+			activeUser = acc;
 			found = true;
 		}
 	}
 	if (!found) {
-		a = new account(sm, aName);
-		accounts.push_back(a);
+		activeUser = new account(stockManager, aName);
+		accounts.push_back(activeUser);
 	}
 	userInterface();
 }

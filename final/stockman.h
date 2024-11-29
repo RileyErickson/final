@@ -11,6 +11,7 @@ public:
 	stock& getStock(string name);
 	vector<stock>& getStocks();
 	void updateAllStocks();
+	void addStock(stock s);
 private:
 	vector<stock> stocks;
 };
