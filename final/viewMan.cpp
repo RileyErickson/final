@@ -75,13 +75,24 @@ void viewMan::transaction() {
 
 }
 void viewMan::depositWithdraw() {
-	int choice = -1;
+	double amount = 0;
 	string input = "";
 	//takes users input and passes it off to the correct method
 	cout << "type (W) to withdraw and (D) to deposit or (E) to exit this menu" << endl;
 	cin >> input;
 	if ((input == "d") || (input == "D")) {
-		cout << "deposit" << endl;
+		cout << " how much would you like to deposit? example (23.43)" << endl;
+		cin >> amount;
+		while (cin.fail()) {
+			cin.clear();
+			cin.ignore(1000, '\n');
+			cout << "thats not right try again type it like 0.00" << endl;
+			cin >> amount;
+		}
+		//prevents 23.3242343225 inputs
+		amount = static_cast<int>(amount * 100) / 100.0;
+		a->setBalance(a->getBalance() + amount);
+		a->addDeposited(amount);
 	}
 	if ((input == "w") || (input == "W")) {
 		cout << " withdrew" << endl;

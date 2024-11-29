@@ -23,6 +23,7 @@ public:
     int purchaseStock(string stockName, int quantity);
     int sellStock( string stockName, int quantity);
     double getWithdrew();
+    void addDeposited(double x);
     double getDeposited();
 };
 

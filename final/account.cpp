@@ -30,6 +30,10 @@ double account::getWithdrew() {
 double account::getDeposited() {
     return deposited;
 }
+void account::addDeposited(double x) {
+    deposited = deposited + x;
+
+}
 void account::setBalance(double update) {
     balance = update;
 }
