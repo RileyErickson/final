@@ -19,6 +19,7 @@ private:
 	void transaction();
 	void passTime();
 	void swapAccount();
+	void depositWithdraw();
 	stockman& sm;
 	account* a;
 	account* b;

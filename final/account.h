@@ -11,6 +11,8 @@ private:
     stockman& sm;
     vector<tuple<string, int>> owned_stocks;
     string name;
+    double withdrew;
+    double deposited;
 public:
     
     account(stockman& stockManager, string n);
@@ -20,6 +22,8 @@ public:
     void setBalance(double newBalance);
     int purchaseStock(string stockName, int quantity);
     int sellStock( string stockName, int quantity);
+    double getWithdrew();
+    double getDeposited();
 };
 
 

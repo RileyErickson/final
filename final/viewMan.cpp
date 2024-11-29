@@ -44,7 +44,9 @@ void viewMan::owned() {
 
 void viewMan::balence() {
 	
-	cout << " Balence" << a->getBalance() << endl;
+	cout << " Balence: " << a->getBalance() << endl;
+	//shows how much money has been made by an account
+	cout << " Profits: " << (a->getBalance() - a->getDeposited()) + a->getWithdrew() << endl;
 	userInterface();
 }
 //exits program since it does not call userInterface to return to main menu
@@ -57,25 +59,45 @@ void viewMan::passTime() {
 	userInterface();
 }
 void viewMan::menu() {
-	cout << "hello " << a->getName() << endl;
+
+	cout << a->getName() <<"'s account" << endl;
+	cout << "make a selection (type 0-5 to a make choice)" << endl;
 	cout << "1. make a transaction (buy/sell)" << endl;
 	cout << "2. check your balence " << endl;
 	cout << "3. check stock prices" << endl;
 	cout << "4. view owned stocks" << endl;
 	cout << "5. pass time " << endl;
 	cout << "6. change user " << endl;
+	cout << "7. make deposit/withdraw" << endl;
 	cout << "0. exit" << endl;
 }
 void viewMan::transaction() {
 
-userInterface();
 }
+void viewMan::depositWithdraw() {
+	int choice = -1;
+	string input = "";
+	//takes users input and passes it off to the correct method
+	cout << "type (W) to withdraw and (D) to deposit or (E) to exit this menu" << endl;
+	cin >> input;
+	if ((input == "d") || (input == "D")) {
+		cout << "deposit" << endl;
+	}
+	if ((input == "w") || (input == "W")) {
+		cout << " withdrew" << endl;
+	}
+	if ((input == "e") || (input == "E")) {
+		userInterface();
+	}
+	depositWithdraw();
+
+}
+
 
 void viewMan::userInterface() {
 	int choice = -1;
 	string input = "";
 	//takes users input and passes it off to the correct method
-	cout << "make a selection (type 0-5 to a make choice)"<<endl;
 	menu();
 	while (choice == -1) {
 		cin >> input;
@@ -102,6 +124,8 @@ void viewMan::userInterface() {
 	case 6:
 		swapAccount();
 		break;
+	case 7:
+		depositWithdraw();
 	case 0:
 		exit();
 		break;
@@ -110,7 +134,6 @@ void viewMan::userInterface() {
 		break;
 	}
 
-	cout << "test worked" << endl;
 
 }
 void viewMan::swapAccount() {
