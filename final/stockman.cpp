@@ -16,8 +16,13 @@ stockman::stockman() {
 
 }
 
-int stockman::getStock(string name) {
-    return 4321;
+stock& stockman::getStock(string name) {
+    for (stock& s : stocks) {
+        if (s.getName() == name) {
+            return s;
+        }
+    }
+    
 }
  std::vector<stock>& stockman::getStocks()  {
     return stocks;

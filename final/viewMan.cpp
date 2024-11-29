@@ -30,7 +30,7 @@ void viewMan::owned() {
 	int counter = 0;
 	for (stock& s : sm.getStocks()) {
 		counter++;
-		cout << s.getName() << ": " << a->getStockAmount(s.getName());
+		cout << s.getName() << ": " << a->getStockAmount(s.getName()) <<" $: " << sm.getStock(s.getName()).getPrice() * a->getStockAmount(s.getName());
 		if (counter != 3) {
 			cout << " | ";
 		}
@@ -47,7 +47,7 @@ void viewMan::balence() {
 	
 	cout << " Balence: " << a->getBalance() << endl;
 	//shows how much money has been made by an account
-	cout << " Profits: " << (a->getBalance() - a->getDeposited()) + a->getWithdrew() << endl;
+	cout << " Profits: " << (a->getRen() - a->getSpent()) << endl;
 	userInterface();
 }
 //exits program since it does not call userInterface to return to main menu
@@ -73,6 +73,7 @@ void viewMan::menu() {
 	cout << "7. make deposit/withdraw" << endl;
 	cout << "0. exit" << endl;
 }
+
 void viewMan::transaction() {
 	string input = "";
 	int amount = 0;
@@ -101,6 +102,7 @@ void viewMan::transaction() {
 		cin.clear();
 		cin.ignore(1000, '\n');
 		cin >> amount;
+		//validates user input
 		while (cin.fail()|| amount <=0) {
 			cin.clear();
 			cin.ignore(1000, '\n');
@@ -113,12 +115,50 @@ void viewMan::transaction() {
 		}
 		a->purchaseStock(input, amount);
 		a->setBalance(a->getBalance() - amount*price);
-		a->addWithdraw(amount*price);
+		a->addSpent(amount*price);
 		cout << "Congrats you now own " << amount << " of " << input << endl;
 
 	}
+	//handles selling a copy of the buying process but with the end step changed.
 	else if ((input == "s") || (input == "S")) {
-
+		cout << "which stock would you like to sell?" << endl;
+		prices();
+		cout << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << endl;
+		owned();
+		cin.clear();
+		cin >> input;
+		//checks stock selection
+		for (stock& s : sm.getStocks()) {
+			if (s.getName() == input) {
+				validStock = true;
+				price = s.getPrice();
+			}
+		}
+		if (!validStock) {
+			cout << "sorry I don't see a stock named: " << input << endl;
+			transaction();
+		}
+		//checks amount
+		cout << "how much would you like to sell?" << endl;
+		cin.clear();
+		cin.ignore(1000, '\n');
+		cin >> amount;
+		//validates user input
+		while (cin.fail() || amount <= 0) {
+			cin.clear();
+			cin.ignore(1000, '\n');
+			cout << "thats not right, try again" << endl;
+			cin >> amount;
+		}
+		//stops selling more then you have
+		if ((amount > a->getStockAmount(input))) {
+			cout << "am sorry you can't sell more then you have" << endl;
+			transaction();
+		}
+		a->sellStock(input, amount);
+		a->addRen(amount*price);
+		a->setBalance(a->getBalance() + amount * price);
+		cout << "Congrats you sold " << amount << " of " << input << " for "<< amount*price << endl;
 	} else if ((input == "e") || (input == "E")) {
 		userInterface();
 	}
@@ -133,6 +173,7 @@ void viewMan::depositWithdraw() {
 	if ((input == "d") || (input == "D")) {
 		cout << " how much would you like to deposit? example (23.43)" << endl;
 		cin >> amount;
+		//validates user input
 		while (cin.fail() || amount < 0) {
 			cin.clear();
 			cin.ignore(1000, '\n');
@@ -147,6 +188,7 @@ void viewMan::depositWithdraw() {
 	}
 	if ((input == "w") || (input == "W")) {
 		bool validAmount = false;
+		//validates user input
 		while (!validAmount) {
 			cout << " how much would you like to withdraw? example (23.43)" << endl;
 			cin >> amount;

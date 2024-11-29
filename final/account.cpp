@@ -8,6 +8,8 @@ account::account(stockman& stockManager, string name) : sm(stockManager){
     }
     withdrew = 0;
     deposited = balance;
+    spent = 0.0;
+    ren = 0;
 }
 
 int account::getStockAmount(string name) {
@@ -41,7 +43,18 @@ void account::addWithdraw(double x) {
 void account::setBalance(double update) {
     balance = update;
 }
-
+double account::getRen() {
+    return ren;
+}
+void account::addRen(double update) {
+    ren = ren + update;
+}
+double account::getSpent() {
+    return spent;
+}
+void account::addSpent(double update) {
+    spent = spent + update;
+}
 int account::purchaseStock(string stockName, int quantity) {
     for (tuple<string, int>& s : owned_stocks) {
         if (get<0>(s) == stockName) {
@@ -55,7 +68,7 @@ int account::purchaseStock(string stockName, int quantity) {
 int account::sellStock(string stockName, int quantity) {
     for (tuple<string, int>& s : owned_stocks) {
         if (get<0>(s) == stockName) {
-            get<1>(s) = get<1>(s) + quantity;
+            get<1>(s) = get<1>(s) - quantity;
             return 0;
         }
     }

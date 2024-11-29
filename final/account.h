@@ -13,6 +13,8 @@ private:
     string name;
     double withdrew;
     double deposited;
+    double ren;
+    double spent;
 public:
     
     account(stockman& stockManager, string n);
@@ -26,6 +28,10 @@ public:
     void addDeposited(double x);
     void addWithdraw(double x);
     double getDeposited();
+    double getRen();
+    void addRen(double update);
+    double getSpent();
+    void addSpent(double update);
 };
 
 
