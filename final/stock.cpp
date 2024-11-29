@@ -22,9 +22,9 @@ void stock::setPrice(double price) {
 }
 
 void stock::updateStock() {
-    bool increase = rand() % 3;
-    //change price from 0-15%
-    double percentage = rand() % 16 / 100.0;   
+    int increase = rand() % 3;
+    //change price from 0-30%
+    double percentage = rand() % 15 / 100.0;   
     // 1/3 chance do nothing, increase, or decrease
     if (increase == 1) {
         percentage = 1 + percentage;

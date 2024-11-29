@@ -29,6 +29,6 @@ stock& stockman::getStock(string name) {
 }
 void stockman::updateAllStocks() {
      for (stock& s : stocks) {
-         s.updateStock();  
+             s.updateStock();
      }
  }
