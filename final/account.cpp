@@ -34,14 +34,30 @@ void account::addDeposited(double x) {
     deposited = deposited + x;
 
 }
+void account::addWithdraw(double x) {
+    withdrew = withdrew + x;
+
+}
 void account::setBalance(double update) {
     balance = update;
 }
 
 int account::purchaseStock(string stockName, int quantity) {
+    for (tuple<string, int>& s : owned_stocks) {
+        if (get<0>(s) == stockName) {
+            get<1>(s) = get<1>(s) + quantity;
+            return 0;
+        }
+    }
     return 1;
 }
 
 int account::sellStock(string stockName, int quantity) {
+    for (tuple<string, int>& s : owned_stocks) {
+        if (get<0>(s) == stockName) {
+            get<1>(s) = get<1>(s) + quantity;
+            return 0;
+        }
+    }
     return 1;
 }

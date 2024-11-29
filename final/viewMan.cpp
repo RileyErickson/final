@@ -7,7 +7,8 @@
 		this->a = a;
 		accounts.push_back(a);
 	}
-//end of each piece it re enters the main directory by calling userInterface
+//prices/owned calls nothing at the end so other methods can use them for display purposes without them
+//automaticly going to a new menu
 void viewMan::prices() {
 	int counter = 0;
 	for (stock& s : sm.getStocks()) {
@@ -22,7 +23,7 @@ void viewMan::prices() {
 			counter = 0;
 		}
 	}
-	userInterface();
+	//userInterface();
 }
 
 void viewMan::owned() {
@@ -39,7 +40,7 @@ void viewMan::owned() {
 			counter = 0;
 		}
 	}
-	userInterface();
+	//userInterface();
 }
 
 void viewMan::balence() {
@@ -55,7 +56,8 @@ void viewMan::exit() {
 }
 void viewMan::passTime() {
 	sm.updateAllStocks();
-	cout << "Check those New Prices!" << endl;
+	cout << "Check out those New Prices!" << endl;
+	prices();
 	userInterface();
 }
 void viewMan::menu() {
@@ -72,7 +74,55 @@ void viewMan::menu() {
 	cout << "0. exit" << endl;
 }
 void viewMan::transaction() {
+	string input = "";
+	int amount = 0;
+	double price = 0;
+	bool validStock = false;
+	cout << "type (S) to sell and (B) to buy or (E) to exit this menu" << endl;
+	cin >> input;
+	if ((input == "b") || (input == "B")) {
+		cout << "which stock would you like to buy?" << endl;
+		prices();
+		cin.clear();
+		cin >> input;
+		//checks stock selection
+		for (stock& s : sm.getStocks()) {
+			if (s.getName() == input) {
+				validStock = true;
+				price = s.getPrice();
+			}
+		}
+		if (!validStock) {
+			cout << "sorry I don't see a stock named: " << input << endl;
+			transaction();
+		}
+		//checks amount
+		cout << "how much would you like to buy?" << endl;
+		cin.clear();
+		cin.ignore(1000, '\n');
+		cin >> amount;
+		while (cin.fail()|| amount <=0) {
+			cin.clear();
+			cin.ignore(1000, '\n');
+			cout << "thats not right, try again" << endl;
+			cin >> amount;
+		}
+		if (!(price * amount <= a->getBalance())) {
+			cout << "am sorry you can't afford that much" << endl;
+			transaction();
+		}
+		a->purchaseStock(input, amount);
+		a->setBalance(a->getBalance() - amount*price);
+		a->addWithdraw(amount*price);
+		cout << "Congrats you now own " << amount << " of " << input << endl;
 
+	}
+	else if ((input == "s") || (input == "S")) {
+
+	} else if ((input == "e") || (input == "E")) {
+		userInterface();
+	}
+	transaction();
 }
 void viewMan::depositWithdraw() {
 	double amount = 0;
@@ -83,7 +133,7 @@ void viewMan::depositWithdraw() {
 	if ((input == "d") || (input == "D")) {
 		cout << " how much would you like to deposit? example (23.43)" << endl;
 		cin >> amount;
-		while (cin.fail()) {
+		while (cin.fail() || amount < 0) {
 			cin.clear();
 			cin.ignore(1000, '\n');
 			cout << "thats not right try again type it like 0.00" << endl;
@@ -93,9 +143,30 @@ void viewMan::depositWithdraw() {
 		amount = static_cast<int>(amount * 100) / 100.0;
 		a->setBalance(a->getBalance() + amount);
 		a->addDeposited(amount);
+		userInterface();
 	}
 	if ((input == "w") || (input == "W")) {
-		cout << " withdrew" << endl;
+		bool validAmount = false;
+		while (!validAmount) {
+			cout << " how much would you like to withdraw? example (23.43)" << endl;
+			cin >> amount;
+			while (cin.fail() || amount < 0) {
+				cin.clear();
+				cin.ignore(1000, '\n');
+				cout << "thats not right try again type it like 0.00" << endl;
+				cin >> amount;
+			}
+			//checks if its less then or equal to balance before allowing withdraw
+			if (amount <= a->getBalance()) {
+				validAmount = true;
+			}
+			else {
+				cout << "thats more then your balence of " << a->getBalance() << endl;
+			}
+		}
+		a->setBalance(a->getBalance() - amount);
+		a->addWithdraw(amount);
+		
 	}
 	if ((input == "e") || (input == "E")) {
 		userInterface();
@@ -125,9 +196,11 @@ void viewMan::userInterface() {
 		break;
 	case 3:
 		prices();
+		userInterface();
 		break;
 	case 4:
 		owned();
+		userInterface();
 		break;
 	case 5:
 		passTime();
@@ -162,7 +235,9 @@ void viewMan::swapAccount() {
 			found = true;
 		}
 	}
-	a = new account(sm, aName);
-	accounts.push_back(a);
+	if (!found) {
+		a = new account(sm, aName);
+		accounts.push_back(a);
+	}
 	userInterface();
 }

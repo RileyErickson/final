@@ -24,6 +24,7 @@ public:
     int sellStock( string stockName, int quantity);
     double getWithdrew();
     void addDeposited(double x);
+    void addWithdraw(double x);
     double getDeposited();
 };
 
