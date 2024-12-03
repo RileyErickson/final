@@ -18,7 +18,7 @@ int main() {
 	//makes first user and the view manager, view manager handles each menu and swapping between them
 	account user(sm, name);
 	viewMan x(&user, sm);
-	//starts menu
+	//launchs main menu
 	x.userInterface();
 	return 0;
 	exit;

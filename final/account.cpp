@@ -3,6 +3,7 @@
 account::account(stockman& stockManager, string name) : sm(stockManager){
     this->name = name;
     balance = 5000;
+    //loads all the stocks created
     for (stock s : stockManager.getStocks()) {
         owned_stocks.emplace_back(s.getName(), 0);
     }
@@ -32,10 +33,12 @@ double account::getWithdrew() {
 double account::getDeposited() {
     return deposited;
 }
+//thought I would need, not used for application
 void account::addDeposited(double x) {
     deposited = deposited + x;
 
 }
+//thought I would need, not used for application
 void account::addWithdraw(double x) {
     withdrew = withdrew + x;
 

@@ -67,7 +67,7 @@ void viewMan::passTime() {
 void viewMan::menu() {
 
 	cout << activeUser->getName() <<"'s account" << endl;
-	cout << "make a selection (type 0-5 to a make choice)" << endl;
+	cout << "make a selection (type 0-7 to a make choice)" << endl;
 	cout << "1. make a transaction (buy/sell)" << endl;
 	cout << "2. check your balence " << endl;
 	cout << "3. check stock prices" << endl;
