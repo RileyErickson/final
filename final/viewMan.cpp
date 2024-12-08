@@ -53,8 +53,9 @@ void viewMan::balence() {
 }
 //exits program since it does not call userInterface to return to main menu
 //simply allows the intial userInterface from the main.cpp to end exiting the program
-void viewMan::exit() {
+void viewMan::quit() {
 	cout << "Have a Great Day!=)" << endl;
+	exit(0);
 }
 //changes all the stock prices 
 //
@@ -91,28 +92,32 @@ void viewMan::transaction() {
 		cin.clear();
 		cin >> input;
 		//checks stock selection
+		//as it goes through all the stocks it saves the one if the name the user selected
 		for (stock& s : stockManager.getStocks()) {
 			if (s.getName() == input) {
 				validStock = true;
 				price = s.getPrice();
 			}
 		}
+		//if no match is found the transaction is restarted
 		if (!validStock) {
 			cout << "sorry I don't see a stock named: " << input << endl;
 			transaction();
 		}
-		//checks amount
+		//checks amount the user wants to buy
 		cout << "how much would you like to buy?" << endl;
+		//resets cin to prevent undesired results 
 		cin.clear();
 		cin.ignore(1000, '\n');
 		cin >> amount;
-		//validates user input
+		//validates user input waits for the user to give an amount of stock that is valid
 		while (cin.fail()|| amount <=0) {
 			cin.clear();
 			cin.ignore(1000, '\n');
 			cout << "thats not right, try again" << endl;
 			cin >> amount;
 		}
+		//if they can't afford the amount they want we restart the transaction
 		if (!(price * amount <= activeUser->getBalance())) {
 			cout << "am sorry you can't afford that much" << endl;
 			transaction();
@@ -235,7 +240,7 @@ void viewMan::userInterface() {
 	//handles breaking out into each specific piece 
  	switch (choice) {
 	case 0:
-		exit();
+		quit();
 		break;
 	case 1 :
 		transaction();

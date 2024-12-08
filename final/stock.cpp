@@ -32,7 +32,10 @@ void stock::updateStock() {
     else if (increase == 2) {
         percentage = 1 - percentage;
     }
-    else { percentage = 1; }
+    else { 
+        percentage = 1; 
+    }
+        //once percentage is calculated the new price is calculated.
         price = price * percentage;
         price = static_cast<int>(price * 100) / 100.0;
  

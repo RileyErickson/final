@@ -20,6 +20,6 @@ int main() {
 	viewMan x(&user, sm);
 	//launchs main menu
 	x.userInterface();
-	return 0;
-	exit;
+	//returns 1 since userInterface should end the program on it's own
+	exit(1);
 }

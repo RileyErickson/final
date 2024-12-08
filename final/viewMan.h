@@ -4,6 +4,7 @@ using namespace std;
 #include <vector>
 #include <tuple>
 #include <iostream>
+#include <cstdlib>
 #include "stockman.h"
 #include "stock.h"
 #include "account.h"
@@ -14,7 +15,7 @@ private:
 	void prices();
 	void owned();
 	void balence();
-	void exit();
+	void quit();
 	void menu();
 	void transaction();
 	void passTime();
